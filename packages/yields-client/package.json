@@ -1,0 +1,48 @@
+{
+  "name": "@sentora/yields-client",
+  "version": "1.0.0",
+  "description": "Typed fetch client for the Sentora yields API (vault discovery, analytics, risk, user positions)",
+  "license": "MIT",
+  "author": "Sentora",
+  "homepage": "https://vaults.sentora.com/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sentora-defi/smart-yield-sdk.git",
+    "directory": "packages/yields-client"
+  },
+  "bugs": {
+    "url": "https://github.com/sentora-defi/smart-yield-sdk/issues"
+  },
+  "keywords": [
+    "defi",
+    "vaults",
+    "yields",
+    "api-client"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "type": "module",
+  "exports": {
+    ".": {
+      "sentora-source": "./src/index.ts",
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "sideEffects": false,
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "node build.mjs && tsc -p tsconfig.build.json",
+    "prepublishOnly": "npm run build"
+  }
+}

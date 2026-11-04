@@ -1,0 +1,54 @@
+{
+  "name": "@sentora/vaults-plan",
+  "version": "1.0.0",
+  "description": "Shared unsigned-transaction plan envelope for Sentora vault families. Types + helpers only (plan envelope, client types, a generic simulate-then-send helper, the ERC-20 approve-reset preflight), no vault contract knowledge.",
+  "license": "MIT",
+  "author": "Sentora",
+  "homepage": "https://vaults.sentora.com/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sentora-defi/smart-yield-sdk.git",
+    "directory": "packages/vaults-plan"
+  },
+  "bugs": {
+    "url": "https://github.com/sentora-defi/smart-yield-sdk/issues"
+  },
+  "keywords": [
+    "defi",
+    "vaults",
+    "viem",
+    "transactions"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "type": "module",
+  "exports": {
+    ".": {
+      "sentora-source": "./src/index.ts",
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "sideEffects": false,
+  "peerDependencies": {
+    "viem": "^2.47.5"
+  },
+  "devDependencies": {
+    "viem": "2.55.15"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "node build.mjs && tsc -p tsconfig.build.json",
+    "prepublishOnly": "npm run build"
+  }
+}

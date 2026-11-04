@@ -1,0 +1,4945 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/blockchains": {
+      "get": {
+        "summary": "Get all blockchains",
+        "tags": [],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "200",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "chainId": {
+                        "type": "string"
+                      },
+                      "slug": {
+                        "type": "string"
+                      },
+                      "explorerUrl": {
+                        "type": "string",
+                        "format": "uri"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "symbol": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "chainId"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "500",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "number"
+                    },
+                    "hasError": {
+                      "type": "boolean",
+                      "enum": [
+                        true
+                      ]
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "message": {
+                            "type": "string"
+                          },
+                          "path": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "message"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "message",
+                    "status",
+                    "hasError",
+                    "errors"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/health/alive": {
+      "get": {
+        "summary": "Check if alive",
+        "tags": [],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "200",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "alive": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "alive"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/strategies/positions/allocation-distribution/chart": {
+      "post": {
+        "summary": "Get strategy allocation distribution chart",
+        "tags": [
+          "positions"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "description": "Body",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "vaultChainId": {
+                    "type": "string"
+                  },
+                  "vaultAddress": {
+                    "type": "string"
+                  },
+                  "positions": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "minItems": 1,
+                    "maxItems": 100
+                  },
+                  "since": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "until": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "refresh": {
+                    "oneOf": [
+                      {
+                        "type": "boolean"
+                      },
+                      {
+                        "type": "string"
+                      }
+                    ]
+                  }
+                },
+                "required": [
+                  "vaultChainId",
+                  "vaultAddress",
+                  "positions"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "200",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "lastMetricDate": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "metadata": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "positionId": {
+                            "type": "string"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "index": {
+                            "type": "number"
+                          }
+                        },
+                        "required": [
+                          "positionId",
+                          "name",
+                          "index"
+                        ]
+                      }
+                    },
+                    "metric": {
+                      "type": "array",
+                      "items": {}
+                    }
+                  },
+                  "required": [
+                    "lastMetricDate",
+                    "metadata",
+                    "metric"
+                  ]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "500",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "number"
+                    },
+                    "hasError": {
+                      "type": "boolean",
+                      "enum": [
+                        true
+                      ]
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "message": {
+                            "type": "string"
+                          },
+                          "path": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "message"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "message",
+                    "status",
+                    "hasError",
+                    "errors"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/strategies/positions/{positionId}/metric": {
+      "get": {
+        "summary": "Get strategy position metrics",
+        "tags": [
+          "positions"
+        ],
+        "parameters": [
+          {
+            "name": "positionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256,
+              "pattern": "^[^/\\\\?#%\\s]+$"
+            }
+          },
+          {
+            "name": "vaultChainId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[a-zA-Z0-9_:-]{1,64}$"
+            }
+          },
+          {
+            "name": "vaultAddress",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "since",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "until",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "refresh",
+            "in": "query",
+            "schema": {
+              "oneOf": [
+                {
+                  "type": "boolean"
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "metrics": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "timestamp": {
+                            "type": "string"
+                          },
+                          "metricCreationDate": {
+                            "type": "string"
+                          },
+                          "balances": {
+                            "type": "object",
+                            "properties": {
+                              "underlying": {
+                                "type": "object",
+                                "additionalProperties": {
+                                  "type": "number",
+                                  "nullable": true
+                                }
+                              }
+                            }
+                          },
+                          "risk": {
+                            "type": "object",
+                            "properties": {
+                              "utilizationRatio": {
+                                "type": "number"
+                              },
+                              "yieldBorrowCoverage": {
+                                "type": "number"
+                              },
+                              "healthFactor": {
+                                "type": "number"
+                              },
+                              "availableLiquidityShare": {
+                                "type": "number"
+                              }
+                            }
+                          },
+                          "returns": {
+                            "type": "object",
+                            "properties": {
+                              "percentageWithoutSlippage": {
+                                "type": "number",
+                                "nullable": true
+                              },
+                              "amount": {
+                                "type": "object",
+                                "additionalProperties": {
+                                  "type": "number",
+                                  "nullable": true
+                                }
+                              },
+                              "percentage": {
+                                "type": "number",
+                                "nullable": true
+                              },
+                              "amountWithoutSlippage": {
+                                "type": "object",
+                                "additionalProperties": {
+                                  "type": "number",
+                                  "nullable": true
+                                }
+                              }
+                            }
+                          },
+                          "liquidity": {
+                            "type": "object",
+                            "properties": {
+                              "marketLiquidity": {
+                                "type": "number"
+                              },
+                              "positionNet": {
+                                "type": "object",
+                                "additionalProperties": {
+                                  "type": "number",
+                                  "nullable": true
+                                }
+                              },
+                              "positionBorrow": {
+                                "type": "object",
+                                "additionalProperties": {
+                                  "type": "number",
+                                  "nullable": true
+                                }
+                              },
+                              "positionSupply": {
+                                "type": "object",
+                                "additionalProperties": {
+                                  "type": "number",
+                                  "nullable": true
+                                }
+                              }
+                            }
+                          },
+                          "apy": {
+                            "type": "object",
+                            "properties": {
+                              "borrow": {
+                                "oneOf": [
+                                  {
+                                    "type": "number"
+                                  },
+                                  {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                      "type": "number",
+                                      "nullable": true
+                                    }
+                                  }
+                                ],
+                                "nullable": true
+                              },
+                              "supplyRewards": {
+                                "oneOf": [
+                                  {
+                                    "type": "number"
+                                  },
+                                  {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                      "type": "number",
+                                      "nullable": true
+                                    }
+                                  }
+                                ],
+                                "nullable": true
+                              },
+                              "supply": {
+                                "oneOf": [
+                                  {
+                                    "type": "number"
+                                  },
+                                  {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                      "type": "number",
+                                      "nullable": true
+                                    }
+                                  }
+                                ],
+                                "nullable": true
+                              },
+                              "loanNet": {
+                                "oneOf": [
+                                  {
+                                    "type": "number"
+                                  },
+                                  {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                      "type": "number",
+                                      "nullable": true
+                                    }
+                                  }
+                                ],
+                                "nullable": true
+                              },
+                              "borrowRewards": {
+                                "oneOf": [
+                                  {
+                                    "type": "number"
+                                  },
+                                  {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                      "type": "number",
+                                      "nullable": true
+                                    }
+                                  }
+                                ],
+                                "nullable": true
+                              },
+                              "yield": {
+                                "oneOf": [
+                                  {
+                                    "type": "number"
+                                  },
+                                  {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                      "type": "number",
+                                      "nullable": true
+                                    }
+                                  }
+                                ],
+                                "nullable": true
+                              }
+                            }
+                          },
+                          "deployedAmount": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "type": "number",
+                              "nullable": true
+                            }
+                          },
+                          "prices": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "type": "number",
+                              "nullable": true
+                            }
+                          },
+                          "rewards": {
+                            "type": "object",
+                            "additionalProperties": {}
+                          }
+                        }
+                      }
+                    },
+                    "protocol": {
+                      "type": "string"
+                    },
+                    "highlights": {
+                      "type": "object",
+                      "properties": {
+                        "accumulatedReturns": {
+                          "type": "object",
+                          "additionalProperties": {
+                            "type": "number",
+                            "nullable": true
+                          }
+                        },
+                        "healthFactor": {
+                          "type": "number"
+                        },
+                        "borrow": {
+                          "type": "object",
+                          "additionalProperties": {
+                            "type": "number",
+                            "nullable": true
+                          }
+                        },
+                        "underlying": {
+                          "type": "object",
+                          "additionalProperties": {
+                            "type": "number",
+                            "nullable": true
+                          }
+                        },
+                        "utilizationRatio": {
+                          "type": "number"
+                        },
+                        "prices": {
+                          "type": "object",
+                          "additionalProperties": {
+                            "type": "number",
+                            "nullable": true
+                          }
+                        },
+                        "supply": {
+                          "type": "object",
+                          "additionalProperties": {
+                            "type": "number",
+                            "nullable": true
+                          }
+                        }
+                      }
+                    },
+                    "annualizedReturns": {
+                      "type": "object",
+                      "properties": {
+                        "allTime": {
+                          "type": "number"
+                        },
+                        "month": {
+                          "type": "number",
+                          "nullable": true
+                        },
+                        "week": {
+                          "type": "number",
+                          "nullable": true
+                        },
+                        "day": {
+                          "type": "number",
+                          "nullable": true
+                        }
+                      },
+                      "required": [
+                        "month",
+                        "week",
+                        "day"
+                      ]
+                    },
+                    "positionId": {
+                      "type": "string"
+                    },
+                    "strategyId": {
+                      "type": "string"
+                    },
+                    "addresses": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "blockchainId": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "symbol": {
+                      "type": "string"
+                    },
+                    "lastUpdated": {
+                      "type": "string"
+                    },
+                    "mainPositionId": {
+                      "type": "string"
+                    },
+                    "yieldPositionId": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "positionId",
+                    "strategyId",
+                    "addresses",
+                    "blockchainId",
+                    "name",
+                    "symbol"
+                  ]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "500",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "number"
+                    },
+                    "hasError": {
+                      "type": "boolean",
+                      "enum": [
+                        true
+                      ]
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "message": {
+                            "type": "string"
+                          },
+                          "path": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "message"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "message",
+                    "status",
+                    "hasError",
+                    "errors"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/vaults": {
+      "get": {
+        "summary": "Get all vaults",
+        "tags": [],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "200",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "schemaVersion": {
+                        "type": "number",
+                        "enum": [
+                          1
+                        ]
+                      },
+                      "chainId": {
+                        "type": "string"
+                      },
+                      "inputTokens": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "chainId": {
+                              "type": "string"
+                            },
+                            "address": {
+                              "type": "string"
+                            },
+                            "decimals": {
+                              "type": "number"
+                            },
+                            "name": {
+                              "type": "string"
+                            },
+                            "imageUrl": {
+                              "type": "string"
+                            },
+                            "symbol": {
+                              "type": "string"
+                            },
+                            "coingeckoId": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "chainId",
+                            "address",
+                            "decimals",
+                            "name",
+                            "symbol"
+                          ]
+                        }
+                      },
+                      "landingUrl": {
+                        "type": "string"
+                      },
+                      "status": {
+                        "type": "string"
+                      },
+                      "category": {
+                        "type": "string"
+                      },
+                      "depositToken": {
+                        "type": "object",
+                        "properties": {
+                          "chainId": {
+                            "type": "string"
+                          },
+                          "address": {
+                            "type": "string"
+                          },
+                          "decimals": {
+                            "type": "number"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "imageUrl": {
+                            "type": "string"
+                          },
+                          "symbol": {
+                            "type": "string"
+                          },
+                          "coingeckoId": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "chainId",
+                          "address",
+                          "decimals",
+                          "name",
+                          "symbol"
+                        ]
+                      },
+                      "description": {
+                        "type": "string"
+                      },
+                      "featured": {
+                        "type": "boolean"
+                      },
+                      "managementFees": {
+                        "type": "number"
+                      },
+                      "performanceFees": {
+                        "type": "number"
+                      },
+                      "id": {
+                        "type": "number"
+                      },
+                      "receiptToken": {
+                        "type": "object",
+                        "properties": {
+                          "chainId": {
+                            "type": "string"
+                          },
+                          "address": {
+                            "type": "string"
+                          },
+                          "decimals": {
+                            "type": "number"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "imageUrl": {
+                            "type": "string"
+                          },
+                          "symbol": {
+                            "type": "string"
+                          },
+                          "coingeckoId": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "chainId",
+                          "address",
+                          "decimals",
+                          "name",
+                          "symbol"
+                        ]
+                      },
+                      "strategy": {
+                        "type": "string"
+                      },
+                      "riskReports": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string"
+                            },
+                            "url": {
+                              "type": "string"
+                            },
+                            "label": {
+                              "type": "string"
+                            },
+                            "image": {
+                              "type": "string"
+                            },
+                            "imageDark": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "id",
+                            "url"
+                          ]
+                        }
+                      },
+                      "positions": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "positionId": {
+                              "type": "string"
+                            },
+                            "strategyId": {
+                              "type": "string"
+                            },
+                            "blockchainId": {
+                              "type": "string"
+                            },
+                            "addresses": {
+                              "type": "array",
+                              "items": {
+                                "type": "string"
+                              }
+                            },
+                            "name": {
+                              "type": "string"
+                            },
+                            "tokensSymbols": {
+                              "type": "array",
+                              "items": {
+                                "type": "string"
+                              }
+                            },
+                            "mainTokenSymbol": {
+                              "type": "string"
+                            },
+                            "status": {
+                              "type": "string"
+                            },
+                            "protocol": {
+                              "type": "string"
+                            },
+                            "positionSize": {
+                              "type": "object",
+                              "additionalProperties": {
+                                "type": "number",
+                                "nullable": true
+                              }
+                            },
+                            "positionSizeUsd": {
+                              "type": "object",
+                              "additionalProperties": {
+                                "type": "number",
+                                "nullable": true
+                              },
+                              "nullable": true
+                            },
+                            "returns": {
+                              "type": "object",
+                              "additionalProperties": {
+                                "type": "number",
+                                "nullable": true
+                              },
+                              "nullable": true
+                            },
+                            "returnsUsd": {
+                              "type": "object",
+                              "additionalProperties": {
+                                "type": "number",
+                                "nullable": true
+                              },
+                              "nullable": true
+                            },
+                            "apyDay": {
+                              "type": "number",
+                              "nullable": true
+                            },
+                            "apyWeek": {
+                              "type": "number",
+                              "nullable": true
+                            },
+                            "apyMonth": {
+                              "type": "number",
+                              "nullable": true
+                            },
+                            "apy7d": {
+                              "type": "number",
+                              "nullable": true
+                            },
+                            "apy30d": {
+                              "type": "number",
+                              "nullable": true
+                            },
+                            "pendingRewardsUsd": {
+                              "type": "number",
+                              "nullable": true
+                            },
+                            "lastHarvestDate": {
+                              "type": "string",
+                              "nullable": true
+                            },
+                            "lastActivityDate": {
+                              "type": "string",
+                              "nullable": true
+                            },
+                            "mainPositionId": {
+                              "type": "string"
+                            },
+                            "yieldPositionId": {
+                              "type": "string"
+                            },
+                            "isIdleBalance": {
+                              "type": "boolean"
+                            },
+                            "isExternal": {
+                              "type": "boolean"
+                            },
+                            "externalType": {
+                              "type": "string",
+                              "nullable": true
+                            },
+                            "imageUrl": {
+                              "type": "string",
+                              "nullable": true
+                            }
+                          },
+                          "required": [
+                            "positionId",
+                            "strategyId",
+                            "blockchainId",
+                            "addresses",
+                            "name",
+                            "tokensSymbols",
+                            "mainTokenSymbol",
+                            "status",
+                            "positionSize",
+                            "positionSizeUsd",
+                            "returns",
+                            "returnsUsd",
+                            "apyDay",
+                            "apyWeek",
+                            "apyMonth",
+                            "apy7d",
+                            "apy30d",
+                            "pendingRewardsUsd",
+                            "lastHarvestDate",
+                            "lastActivityDate",
+                            "isIdleBalance",
+                            "isExternal",
+                            "externalType",
+                            "imageUrl"
+                          ]
+                        }
+                      },
+                      "contracts": {
+                        "type": "object",
+                        "properties": {
+                          "vault": {
+                            "type": "string"
+                          },
+                          "receiptToken": {
+                            "type": "string"
+                          },
+                          "teller": {
+                            "type": "string"
+                          },
+                          "accountant": {
+                            "type": "string"
+                          },
+                          "queue": {
+                            "type": "string"
+                          },
+                          "rolesAuthority": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "vault"
+                        ]
+                      },
+                      "contractsVerifiedAt": {
+                        "type": "string"
+                      },
+                      "family": {
+                        "type": "string"
+                      },
+                      "familyVersion": {
+                        "type": "number"
+                      },
+                      "vendor": {
+                        "type": "string"
+                      },
+                      "curator": {
+                        "type": "string"
+                      },
+                      "distributor": {
+                        "type": "string"
+                      },
+                      "releaseDate": {
+                        "type": "string"
+                      },
+                      "type": {
+                        "type": "string"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "marketIds": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "hasRiskRadar": {
+                        "type": "boolean"
+                      },
+                      "isFirelightProtected": {
+                        "type": "boolean"
+                      },
+                      "marketDataUpdatedAt": {
+                        "type": "string"
+                      },
+                      "activityIndexedAt": {
+                        "type": "string"
+                      },
+                      "analytics": {
+                        "type": "object",
+                        "properties": {
+                          "tvlSource": {
+                            "type": "string"
+                          },
+                          "tokenPrice": {
+                            "type": "string"
+                          },
+                          "tvl": {
+                            "type": "string"
+                          },
+                          "tvlUsd": {
+                            "type": "string"
+                          },
+                          "periodSeconds": {
+                            "type": "number"
+                          },
+                          "historicTimestamp": {
+                            "type": "string"
+                          },
+                          "currentTimestamp": {
+                            "type": "string"
+                          },
+                          "apy7d": {
+                            "type": "string"
+                          },
+                          "apy30d": {
+                            "type": "string"
+                          },
+                          "totalSupplySource": {
+                            "type": "string"
+                          },
+                          "totalSupply": {
+                            "type": "string"
+                          },
+                          "sharePriceSource": {
+                            "type": "string"
+                          },
+                          "sharePrice": {
+                            "type": "string"
+                          },
+                          "campaigns": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "vaultId": {
+                                  "oneOf": [
+                                    {
+                                      "type": "string"
+                                    },
+                                    {
+                                      "type": "number"
+                                    }
+                                  ]
+                                },
+                                "totalApr": {
+                                  "type": "number"
+                                },
+                                "source": {
+                                  "type": "string"
+                                },
+                                "campaignIds": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "string"
+                                  }
+                                },
+                                "breakdown": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object",
+                                    "properties": {
+                                      "tokenSymbol": {
+                                        "type": "string"
+                                      },
+                                      "tokenAddress": {
+                                        "type": "string"
+                                      },
+                                      "apr": {
+                                        "type": "number"
+                                      }
+                                    },
+                                    "required": [
+                                      "tokenSymbol",
+                                      "tokenAddress",
+                                      "apr"
+                                    ]
+                                  }
+                                },
+                                "status": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "vaultId",
+                                "totalApr",
+                                "source",
+                                "campaignIds",
+                                "breakdown",
+                                "status"
+                              ]
+                            }
+                          },
+                          "isHistoric": {
+                            "type": "boolean"
+                          }
+                        },
+                        "nullable": true
+                      },
+                      "protocolDescription": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "schemaVersion",
+                      "isFirelightProtected",
+                      "analytics"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "500",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "number"
+                    },
+                    "hasError": {
+                      "type": "boolean",
+                      "enum": [
+                        true
+                      ]
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "message": {
+                            "type": "string"
+                          },
+                          "path": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "message"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "message",
+                    "status",
+                    "hasError",
+                    "errors"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/vaults/featured": {
+      "get": {
+        "summary": "Get featured vaults",
+        "tags": [],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "200",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "schemaVersion": {
+                        "type": "number",
+                        "enum": [
+                          1
+                        ]
+                      },
+                      "chainId": {
+                        "type": "string"
+                      },
+                      "inputTokens": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "chainId": {
+                              "type": "string"
+                            },
+                            "address": {
+                              "type": "string"
+                            },
+                            "decimals": {
+                              "type": "number"
+                            },
+                            "name": {
+                              "type": "string"
+                            },
+                            "imageUrl": {
+                              "type": "string"
+                            },
+                            "symbol": {
+                              "type": "string"
+                            },
+                            "coingeckoId": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "chainId",
+                            "address",
+                            "decimals",
+                            "name",
+                            "symbol"
+                          ]
+                        }
+                      },
+                      "landingUrl": {
+                        "type": "string"
+                      },
+                      "status": {
+                        "type": "string"
+                      },
+                      "category": {
+                        "type": "string"
+                      },
+                      "depositToken": {
+                        "type": "object",
+                        "properties": {
+                          "chainId": {
+                            "type": "string"
+                          },
+                          "address": {
+                            "type": "string"
+                          },
+                          "decimals": {
+                            "type": "number"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "imageUrl": {
+                            "type": "string"
+                          },
+                          "symbol": {
+                            "type": "string"
+                          },
+                          "coingeckoId": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "chainId",
+                          "address",
+                          "decimals",
+                          "name",
+                          "symbol"
+                        ]
+                      },
+                      "description": {
+                        "type": "string"
+                      },
+                      "featured": {
+                        "type": "boolean"
+                      },
+                      "managementFees": {
+                        "type": "number"
+                      },
+                      "performanceFees": {
+                        "type": "number"
+                      },
+                      "id": {
+                        "type": "number"
+                      },
+                      "receiptToken": {
+                        "type": "object",
+                        "properties": {
+                          "chainId": {
+                            "type": "string"
+                          },
+                          "address": {
+                            "type": "string"
+                          },
+                          "decimals": {
+                            "type": "number"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "imageUrl": {
+                            "type": "string"
+                          },
+                          "symbol": {
+                            "type": "string"
+                          },
+                          "coingeckoId": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "chainId",
+                          "address",
+                          "decimals",
+                          "name",
+                          "symbol"
+                        ]
+                      },
+                      "strategy": {
+                        "type": "string"
+                      },
+                      "riskReports": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string"
+                            },
+                            "url": {
+                              "type": "string"
+                            },
+                            "label": {
+                              "type": "string"
+                            },
+                            "image": {
+                              "type": "string"
+                            },
+                            "imageDark": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "id",
+                            "url"
+                          ]
+                        }
+                      },
+                      "positions": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "positionId": {
+                              "type": "string"
+                            },
+                            "strategyId": {
+                              "type": "string"
+                            },
+                            "blockchainId": {
+                              "type": "string"
+                            },
+                            "addresses": {
+                              "type": "array",
+                              "items": {
+                                "type": "string"
+                              }
+                            },
+                            "name": {
+                              "type": "string"
+                            },
+                            "tokensSymbols": {
+                              "type": "array",
+                              "items": {
+                                "type": "string"
+                              }
+                            },
+                            "mainTokenSymbol": {
+                              "type": "string"
+                            },
+                            "status": {
+                              "type": "string"
+                            },
+                            "protocol": {
+                              "type": "string"
+                            },
+                            "positionSize": {
+                              "type": "object",
+                              "additionalProperties": {
+                                "type": "number",
+                                "nullable": true
+                              }
+                            },
+                            "positionSizeUsd": {
+                              "type": "object",
+                              "additionalProperties": {
+                                "type": "number",
+                                "nullable": true
+                              },
+                              "nullable": true
+                            },
+                            "returns": {
+                              "type": "object",
+                              "additionalProperties": {
+                                "type": "number",
+                                "nullable": true
+                              },
+                              "nullable": true
+                            },
+                            "returnsUsd": {
+                              "type": "object",
+                              "additionalProperties": {
+                                "type": "number",
+                                "nullable": true
+                              },
+                              "nullable": true
+                            },
+                            "apyDay": {
+                              "type": "number",
+                              "nullable": true
+                            },
+                            "apyWeek": {
+                              "type": "number",
+                              "nullable": true
+                            },
+                            "apyMonth": {
+                              "type": "number",
+                              "nullable": true
+                            },
+                            "apy7d": {
+                              "type": "number",
+                              "nullable": true
+                            },
+                            "apy30d": {
+                              "type": "number",
+                              "nullable": true
+                            },
+                            "pendingRewardsUsd": {
+                              "type": "number",
+                              "nullable": true
+                            },
+                            "lastHarvestDate": {
+                              "type": "string",
+                              "nullable": true
+                            },
+                            "lastActivityDate": {
+                              "type": "string",
+                              "nullable": true
+                            },
+                            "mainPositionId": {
+                              "type": "string"
+                            },
+                            "yieldPositionId": {
+                              "type": "string"
+                            },
+                            "isIdleBalance": {
+                              "type": "boolean"
+                            },
+                            "isExternal": {
+                              "type": "boolean"
+                            },
+                            "externalType": {
+                              "type": "string",
+                              "nullable": true
+                            },
+                            "imageUrl": {
+                              "type": "string",
+                              "nullable": true
+                            }
+                          },
+                          "required": [
+                            "positionId",
+                            "strategyId",
+                            "blockchainId",
+                            "addresses",
+                            "name",
+                            "tokensSymbols",
+                            "mainTokenSymbol",
+                            "status",
+                            "positionSize",
+                            "positionSizeUsd",
+                            "returns",
+                            "returnsUsd",
+                            "apyDay",
+                            "apyWeek",
+                            "apyMonth",
+                            "apy7d",
+                            "apy30d",
+                            "pendingRewardsUsd",
+                            "lastHarvestDate",
+                            "lastActivityDate",
+                            "isIdleBalance",
+                            "isExternal",
+                            "externalType",
+                            "imageUrl"
+                          ]
+                        }
+                      },
+                      "contracts": {
+                        "type": "object",
+                        "properties": {
+                          "vault": {
+                            "type": "string"
+                          },
+                          "receiptToken": {
+                            "type": "string"
+                          },
+                          "teller": {
+                            "type": "string"
+                          },
+                          "accountant": {
+                            "type": "string"
+                          },
+                          "queue": {
+                            "type": "string"
+                          },
+                          "rolesAuthority": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "vault"
+                        ]
+                      },
+                      "contractsVerifiedAt": {
+                        "type": "string"
+                      },
+                      "family": {
+                        "type": "string"
+                      },
+                      "familyVersion": {
+                        "type": "number"
+                      },
+                      "vendor": {
+                        "type": "string"
+                      },
+                      "curator": {
+                        "type": "string"
+                      },
+                      "distributor": {
+                        "type": "string"
+                      },
+                      "releaseDate": {
+                        "type": "string"
+                      },
+                      "type": {
+                        "type": "string"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "marketIds": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "hasRiskRadar": {
+                        "type": "boolean"
+                      },
+                      "isFirelightProtected": {
+                        "type": "boolean"
+                      },
+                      "marketDataUpdatedAt": {
+                        "type": "string"
+                      },
+                      "activityIndexedAt": {
+                        "type": "string"
+                      },
+                      "analytics": {
+                        "type": "object",
+                        "properties": {
+                          "tvlSource": {
+                            "type": "string"
+                          },
+                          "tokenPrice": {
+                            "type": "string"
+                          },
+                          "tvl": {
+                            "type": "string"
+                          },
+                          "tvlUsd": {
+                            "type": "string"
+                          },
+                          "periodSeconds": {
+                            "type": "number"
+                          },
+                          "historicTimestamp": {
+                            "type": "string"
+                          },
+                          "currentTimestamp": {
+                            "type": "string"
+                          },
+                          "apy7d": {
+                            "type": "string"
+                          },
+                          "apy30d": {
+                            "type": "string"
+                          },
+                          "totalSupplySource": {
+                            "type": "string"
+                          },
+                          "totalSupply": {
+                            "type": "string"
+                          },
+                          "sharePriceSource": {
+                            "type": "string"
+                          },
+                          "sharePrice": {
+                            "type": "string"
+                          },
+                          "campaigns": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "vaultId": {
+                                  "oneOf": [
+                                    {
+                                      "type": "string"
+                                    },
+                                    {
+                                      "type": "number"
+                                    }
+                                  ]
+                                },
+                                "totalApr": {
+                                  "type": "number"
+                                },
+                                "source": {
+                                  "type": "string"
+                                },
+                                "campaignIds": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "string"
+                                  }
+                                },
+                                "breakdown": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object",
+                                    "properties": {
+                                      "tokenSymbol": {
+                                        "type": "string"
+                                      },
+                                      "tokenAddress": {
+                                        "type": "string"
+                                      },
+                                      "apr": {
+                                        "type": "number"
+                                      }
+                                    },
+                                    "required": [
+                                      "tokenSymbol",
+                                      "tokenAddress",
+                                      "apr"
+                                    ]
+                                  }
+                                },
+                                "status": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "vaultId",
+                                "totalApr",
+                                "source",
+                                "campaignIds",
+                                "breakdown",
+                                "status"
+                              ]
+                            }
+                          },
+                          "isHistoric": {
+                            "type": "boolean"
+                          }
+                        },
+                        "nullable": true
+                      },
+                      "protocolDescription": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "schemaVersion",
+                      "isFirelightProtected",
+                      "analytics"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "500",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "number"
+                    },
+                    "hasError": {
+                      "type": "boolean",
+                      "enum": [
+                        true
+                      ]
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "message": {
+                            "type": "string"
+                          },
+                          "path": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "message"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "message",
+                    "status",
+                    "hasError",
+                    "errors"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/vaults/related/{chainId}/{address}": {
+      "get": {
+        "summary": "Get related vaults",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "chainId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[a-zA-Z0-9_:-]{1,64}$"
+            }
+          },
+          {
+            "name": "address",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "schemaVersion": {
+                        "type": "number",
+                        "enum": [
+                          1
+                        ]
+                      },
+                      "chainId": {
+                        "type": "string"
+                      },
+                      "inputTokens": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "chainId": {
+                              "type": "string"
+                            },
+                            "address": {
+                              "type": "string"
+                            },
+                            "decimals": {
+                              "type": "number"
+                            },
+                            "name": {
+                              "type": "string"
+                            },
+                            "imageUrl": {
+                              "type": "string"
+                            },
+                            "symbol": {
+                              "type": "string"
+                            },
+                            "coingeckoId": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "chainId",
+                            "address",
+                            "decimals",
+                            "name",
+                            "symbol"
+                          ]
+                        }
+                      },
+                      "landingUrl": {
+                        "type": "string"
+                      },
+                      "status": {
+                        "type": "string"
+                      },
+                      "category": {
+                        "type": "string"
+                      },
+                      "depositToken": {
+                        "type": "object",
+                        "properties": {
+                          "chainId": {
+                            "type": "string"
+                          },
+                          "address": {
+                            "type": "string"
+                          },
+                          "decimals": {
+                            "type": "number"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "imageUrl": {
+                            "type": "string"
+                          },
+                          "symbol": {
+                            "type": "string"
+                          },
+                          "coingeckoId": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "chainId",
+                          "address",
+                          "decimals",
+                          "name",
+                          "symbol"
+                        ]
+                      },
+                      "description": {
+                        "type": "string"
+                      },
+                      "featured": {
+                        "type": "boolean"
+                      },
+                      "managementFees": {
+                        "type": "number"
+                      },
+                      "performanceFees": {
+                        "type": "number"
+                      },
+                      "id": {
+                        "type": "number"
+                      },
+                      "receiptToken": {
+                        "type": "object",
+                        "properties": {
+                          "chainId": {
+                            "type": "string"
+                          },
+                          "address": {
+                            "type": "string"
+                          },
+                          "decimals": {
+                            "type": "number"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "imageUrl": {
+                            "type": "string"
+                          },
+                          "symbol": {
+                            "type": "string"
+                          },
+                          "coingeckoId": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "chainId",
+                          "address",
+                          "decimals",
+                          "name",
+                          "symbol"
+                        ]
+                      },
+                      "strategy": {
+                        "type": "string"
+                      },
+                      "riskReports": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string"
+                            },
+                            "url": {
+                              "type": "string"
+                            },
+                            "label": {
+                              "type": "string"
+                            },
+                            "image": {
+                              "type": "string"
+                            },
+                            "imageDark": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "id",
+                            "url"
+                          ]
+                        }
+                      },
+                      "positions": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "positionId": {
+                              "type": "string"
+                            },
+                            "strategyId": {
+                              "type": "string"
+                            },
+                            "blockchainId": {
+                              "type": "string"
+                            },
+                            "addresses": {
+                              "type": "array",
+                              "items": {
+                                "type": "string"
+                              }
+                            },
+                            "name": {
+                              "type": "string"
+                            },
+                            "tokensSymbols": {
+                              "type": "array",
+                              "items": {
+                                "type": "string"
+                              }
+                            },
+                            "mainTokenSymbol": {
+                              "type": "string"
+                            },
+                            "status": {
+                              "type": "string"
+                            },
+                            "protocol": {
+                              "type": "string"
+                            },
+                            "positionSize": {
+                              "type": "object",
+                              "additionalProperties": {
+                                "type": "number",
+                                "nullable": true
+                              }
+                            },
+                            "positionSizeUsd": {
+                              "type": "object",
+                              "additionalProperties": {
+                                "type": "number",
+                                "nullable": true
+                              },
+                              "nullable": true
+                            },
+                            "returns": {
+                              "type": "object",
+                              "additionalProperties": {
+                                "type": "number",
+                                "nullable": true
+                              },
+                              "nullable": true
+                            },
+                            "returnsUsd": {
+                              "type": "object",
+                              "additionalProperties": {
+                                "type": "number",
+                                "nullable": true
+                              },
+                              "nullable": true
+                            },
+                            "apyDay": {
+                              "type": "number",
+                              "nullable": true
+                            },
+                            "apyWeek": {
+                              "type": "number",
+                              "nullable": true
+                            },
+                            "apyMonth": {
+                              "type": "number",
+                              "nullable": true
+                            },
+                            "apy7d": {
+                              "type": "number",
+                              "nullable": true
+                            },
+                            "apy30d": {
+                              "type": "number",
+                              "nullable": true
+                            },
+                            "pendingRewardsUsd": {
+                              "type": "number",
+                              "nullable": true
+                            },
+                            "lastHarvestDate": {
+                              "type": "string",
+                              "nullable": true
+                            },
+                            "lastActivityDate": {
+                              "type": "string",
+                              "nullable": true
+                            },
+                            "mainPositionId": {
+                              "type": "string"
+                            },
+                            "yieldPositionId": {
+                              "type": "string"
+                            },
+                            "isIdleBalance": {
+                              "type": "boolean"
+                            },
+                            "isExternal": {
+                              "type": "boolean"
+                            },
+                            "externalType": {
+                              "type": "string",
+                              "nullable": true
+                            },
+                            "imageUrl": {
+                              "type": "string",
+                              "nullable": true
+                            }
+                          },
+                          "required": [
+                            "positionId",
+                            "strategyId",
+                            "blockchainId",
+                            "addresses",
+                            "name",
+                            "tokensSymbols",
+                            "mainTokenSymbol",
+                            "status",
+                            "positionSize",
+                            "positionSizeUsd",
+                            "returns",
+                            "returnsUsd",
+                            "apyDay",
+                            "apyWeek",
+                            "apyMonth",
+                            "apy7d",
+                            "apy30d",
+                            "pendingRewardsUsd",
+                            "lastHarvestDate",
+                            "lastActivityDate",
+                            "isIdleBalance",
+                            "isExternal",
+                            "externalType",
+                            "imageUrl"
+                          ]
+                        }
+                      },
+                      "contracts": {
+                        "type": "object",
+                        "properties": {
+                          "vault": {
+                            "type": "string"
+                          },
+                          "receiptToken": {
+                            "type": "string"
+                          },
+                          "teller": {
+                            "type": "string"
+                          },
+                          "accountant": {
+                            "type": "string"
+                          },
+                          "queue": {
+                            "type": "string"
+                          },
+                          "rolesAuthority": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "vault"
+                        ]
+                      },
+                      "contractsVerifiedAt": {
+                        "type": "string"
+                      },
+                      "family": {
+                        "type": "string"
+                      },
+                      "familyVersion": {
+                        "type": "number"
+                      },
+                      "vendor": {
+                        "type": "string"
+                      },
+                      "curator": {
+                        "type": "string"
+                      },
+                      "distributor": {
+                        "type": "string"
+                      },
+                      "releaseDate": {
+                        "type": "string"
+                      },
+                      "type": {
+                        "type": "string"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "marketIds": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "hasRiskRadar": {
+                        "type": "boolean"
+                      },
+                      "isFirelightProtected": {
+                        "type": "boolean"
+                      },
+                      "marketDataUpdatedAt": {
+                        "type": "string"
+                      },
+                      "activityIndexedAt": {
+                        "type": "string"
+                      },
+                      "analytics": {
+                        "type": "object",
+                        "properties": {
+                          "tvlSource": {
+                            "type": "string"
+                          },
+                          "tokenPrice": {
+                            "type": "string"
+                          },
+                          "tvl": {
+                            "type": "string"
+                          },
+                          "tvlUsd": {
+                            "type": "string"
+                          },
+                          "periodSeconds": {
+                            "type": "number"
+                          },
+                          "historicTimestamp": {
+                            "type": "string"
+                          },
+                          "currentTimestamp": {
+                            "type": "string"
+                          },
+                          "apy7d": {
+                            "type": "string"
+                          },
+                          "apy30d": {
+                            "type": "string"
+                          },
+                          "totalSupplySource": {
+                            "type": "string"
+                          },
+                          "totalSupply": {
+                            "type": "string"
+                          },
+                          "sharePriceSource": {
+                            "type": "string"
+                          },
+                          "sharePrice": {
+                            "type": "string"
+                          },
+                          "campaigns": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "vaultId": {
+                                  "oneOf": [
+                                    {
+                                      "type": "string"
+                                    },
+                                    {
+                                      "type": "number"
+                                    }
+                                  ]
+                                },
+                                "totalApr": {
+                                  "type": "number"
+                                },
+                                "source": {
+                                  "type": "string"
+                                },
+                                "campaignIds": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "string"
+                                  }
+                                },
+                                "breakdown": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object",
+                                    "properties": {
+                                      "tokenSymbol": {
+                                        "type": "string"
+                                      },
+                                      "tokenAddress": {
+                                        "type": "string"
+                                      },
+                                      "apr": {
+                                        "type": "number"
+                                      }
+                                    },
+                                    "required": [
+                                      "tokenSymbol",
+                                      "tokenAddress",
+                                      "apr"
+                                    ]
+                                  }
+                                },
+                                "status": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "vaultId",
+                                "totalApr",
+                                "source",
+                                "campaignIds",
+                                "breakdown",
+                                "status"
+                              ]
+                            }
+                          },
+                          "isHistoric": {
+                            "type": "boolean"
+                          }
+                        },
+                        "nullable": true
+                      },
+                      "protocolDescription": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "schemaVersion",
+                      "isFirelightProtected",
+                      "analytics"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "500",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "number"
+                    },
+                    "hasError": {
+                      "type": "boolean",
+                      "enum": [
+                        true
+                      ]
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "message": {
+                            "type": "string"
+                          },
+                          "path": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "message"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "message",
+                    "status",
+                    "hasError",
+                    "errors"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/vaults/{chainId}/{address}": {
+      "get": {
+        "summary": "Get a single vault",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "chainId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[a-zA-Z0-9_:-]{1,64}$"
+            }
+          },
+          {
+            "name": "address",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "schemaVersion": {
+                      "type": "number",
+                      "enum": [
+                        1
+                      ]
+                    },
+                    "chainId": {
+                      "type": "string"
+                    },
+                    "inputTokens": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "chainId": {
+                            "type": "string"
+                          },
+                          "address": {
+                            "type": "string"
+                          },
+                          "decimals": {
+                            "type": "number"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "imageUrl": {
+                            "type": "string"
+                          },
+                          "symbol": {
+                            "type": "string"
+                          },
+                          "coingeckoId": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "chainId",
+                          "address",
+                          "decimals",
+                          "name",
+                          "symbol"
+                        ]
+                      }
+                    },
+                    "landingUrl": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "string"
+                    },
+                    "category": {
+                      "type": "string"
+                    },
+                    "depositToken": {
+                      "type": "object",
+                      "properties": {
+                        "chainId": {
+                          "type": "string"
+                        },
+                        "address": {
+                          "type": "string"
+                        },
+                        "decimals": {
+                          "type": "number"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "imageUrl": {
+                          "type": "string"
+                        },
+                        "symbol": {
+                          "type": "string"
+                        },
+                        "coingeckoId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "chainId",
+                        "address",
+                        "decimals",
+                        "name",
+                        "symbol"
+                      ]
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "featured": {
+                      "type": "boolean"
+                    },
+                    "managementFees": {
+                      "type": "number"
+                    },
+                    "performanceFees": {
+                      "type": "number"
+                    },
+                    "id": {
+                      "type": "number"
+                    },
+                    "receiptToken": {
+                      "type": "object",
+                      "properties": {
+                        "chainId": {
+                          "type": "string"
+                        },
+                        "address": {
+                          "type": "string"
+                        },
+                        "decimals": {
+                          "type": "number"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "imageUrl": {
+                          "type": "string"
+                        },
+                        "symbol": {
+                          "type": "string"
+                        },
+                        "coingeckoId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "chainId",
+                        "address",
+                        "decimals",
+                        "name",
+                        "symbol"
+                      ]
+                    },
+                    "strategy": {
+                      "type": "string"
+                    },
+                    "riskReports": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "url": {
+                            "type": "string"
+                          },
+                          "label": {
+                            "type": "string"
+                          },
+                          "image": {
+                            "type": "string"
+                          },
+                          "imageDark": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "url"
+                        ]
+                      }
+                    },
+                    "positions": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "positionId": {
+                            "type": "string"
+                          },
+                          "strategyId": {
+                            "type": "string"
+                          },
+                          "blockchainId": {
+                            "type": "string"
+                          },
+                          "addresses": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "tokensSymbols": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          },
+                          "mainTokenSymbol": {
+                            "type": "string"
+                          },
+                          "status": {
+                            "type": "string"
+                          },
+                          "protocol": {
+                            "type": "string"
+                          },
+                          "positionSize": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "type": "number",
+                              "nullable": true
+                            }
+                          },
+                          "positionSizeUsd": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "type": "number",
+                              "nullable": true
+                            },
+                            "nullable": true
+                          },
+                          "returns": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "type": "number",
+                              "nullable": true
+                            },
+                            "nullable": true
+                          },
+                          "returnsUsd": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "type": "number",
+                              "nullable": true
+                            },
+                            "nullable": true
+                          },
+                          "apyDay": {
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "apyWeek": {
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "apyMonth": {
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "apy7d": {
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "apy30d": {
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "pendingRewardsUsd": {
+                            "type": "number",
+                            "nullable": true
+                          },
+                          "lastHarvestDate": {
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "lastActivityDate": {
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "mainPositionId": {
+                            "type": "string"
+                          },
+                          "yieldPositionId": {
+                            "type": "string"
+                          },
+                          "isIdleBalance": {
+                            "type": "boolean"
+                          },
+                          "isExternal": {
+                            "type": "boolean"
+                          },
+                          "externalType": {
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "imageUrl": {
+                            "type": "string",
+                            "nullable": true
+                          }
+                        },
+                        "required": [
+                          "positionId",
+                          "strategyId",
+                          "blockchainId",
+                          "addresses",
+                          "name",
+                          "tokensSymbols",
+                          "mainTokenSymbol",
+                          "status",
+                          "positionSize",
+                          "positionSizeUsd",
+                          "returns",
+                          "returnsUsd",
+                          "apyDay",
+                          "apyWeek",
+                          "apyMonth",
+                          "apy7d",
+                          "apy30d",
+                          "pendingRewardsUsd",
+                          "lastHarvestDate",
+                          "lastActivityDate",
+                          "isIdleBalance",
+                          "isExternal",
+                          "externalType",
+                          "imageUrl"
+                        ]
+                      }
+                    },
+                    "contracts": {
+                      "type": "object",
+                      "properties": {
+                        "vault": {
+                          "type": "string"
+                        },
+                        "receiptToken": {
+                          "type": "string"
+                        },
+                        "teller": {
+                          "type": "string"
+                        },
+                        "accountant": {
+                          "type": "string"
+                        },
+                        "queue": {
+                          "type": "string"
+                        },
+                        "rolesAuthority": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "vault"
+                      ]
+                    },
+                    "contractsVerifiedAt": {
+                      "type": "string"
+                    },
+                    "family": {
+                      "type": "string"
+                    },
+                    "familyVersion": {
+                      "type": "number"
+                    },
+                    "vendor": {
+                      "type": "string"
+                    },
+                    "curator": {
+                      "type": "string"
+                    },
+                    "distributor": {
+                      "type": "string"
+                    },
+                    "releaseDate": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "marketIds": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "hasRiskRadar": {
+                      "type": "boolean"
+                    },
+                    "isFirelightProtected": {
+                      "type": "boolean"
+                    },
+                    "marketDataUpdatedAt": {
+                      "type": "string"
+                    },
+                    "activityIndexedAt": {
+                      "type": "string"
+                    },
+                    "analytics": {
+                      "type": "object",
+                      "properties": {
+                        "tvlSource": {
+                          "type": "string"
+                        },
+                        "tokenPrice": {
+                          "type": "string"
+                        },
+                        "tvl": {
+                          "type": "string"
+                        },
+                        "tvlUsd": {
+                          "type": "string"
+                        },
+                        "periodSeconds": {
+                          "type": "number"
+                        },
+                        "historicTimestamp": {
+                          "type": "string"
+                        },
+                        "currentTimestamp": {
+                          "type": "string"
+                        },
+                        "apy7d": {
+                          "type": "string"
+                        },
+                        "apy30d": {
+                          "type": "string"
+                        },
+                        "totalSupplySource": {
+                          "type": "string"
+                        },
+                        "totalSupply": {
+                          "type": "string"
+                        },
+                        "sharePriceSource": {
+                          "type": "string"
+                        },
+                        "sharePrice": {
+                          "type": "string"
+                        },
+                        "campaigns": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "vaultId": {
+                                "oneOf": [
+                                  {
+                                    "type": "string"
+                                  },
+                                  {
+                                    "type": "number"
+                                  }
+                                ]
+                              },
+                              "totalApr": {
+                                "type": "number"
+                              },
+                              "source": {
+                                "type": "string"
+                              },
+                              "campaignIds": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string"
+                                }
+                              },
+                              "breakdown": {
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "tokenSymbol": {
+                                      "type": "string"
+                                    },
+                                    "tokenAddress": {
+                                      "type": "string"
+                                    },
+                                    "apr": {
+                                      "type": "number"
+                                    }
+                                  },
+                                  "required": [
+                                    "tokenSymbol",
+                                    "tokenAddress",
+                                    "apr"
+                                  ]
+                                }
+                              },
+                              "status": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "vaultId",
+                              "totalApr",
+                              "source",
+                              "campaignIds",
+                              "breakdown",
+                              "status"
+                            ]
+                          }
+                        },
+                        "isHistoric": {
+                          "type": "boolean"
+                        }
+                      },
+                      "nullable": true
+                    },
+                    "protocolDescription": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "schemaVersion",
+                    "isFirelightProtected",
+                    "analytics"
+                  ]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "500",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "number"
+                    },
+                    "hasError": {
+                      "type": "boolean",
+                      "enum": [
+                        true
+                      ]
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "message": {
+                            "type": "string"
+                          },
+                          "path": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "message"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "message",
+                    "status",
+                    "hasError",
+                    "errors"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/vaults/protocol/{blockchain}/{protocol}/{marketId}?": {
+      "get": {
+        "summary": "Get protocol main insights by blockchain and protocol",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "blockchain",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128,
+              "pattern": "^[^/\\\\?#%\\s]+$"
+            }
+          },
+          {
+            "name": "protocol",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128,
+              "pattern": "^[^/\\\\?#%\\s]+$"
+            }
+          },
+          {
+            "name": "marketId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128,
+              "pattern": "^[^/\\\\?#%\\s]+$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "metric": {
+                      "type": "object",
+                      "properties": {
+                        "totalSupply": {
+                          "type": "string"
+                        },
+                        "totalDebts": {
+                          "type": "string"
+                        },
+                        "totalSupplyUsd": {
+                          "type": "string"
+                        },
+                        "totalDebtsUsd": {
+                          "type": "string"
+                        },
+                        "lastMetricDate": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "market": {
+                      "type": "object",
+                      "properties": {
+                        "blockchain": {
+                          "type": "string"
+                        },
+                        "protocol": {
+                          "type": "string"
+                        },
+                        "marketId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "blockchain",
+                        "protocol"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "metric"
+                  ]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "500",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "number"
+                    },
+                    "hasError": {
+                      "type": "boolean",
+                      "enum": [
+                        true
+                      ]
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "message": {
+                            "type": "string"
+                          },
+                          "path": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "message"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "message",
+                    "status",
+                    "hasError",
+                    "errors"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/vaults/{chainId}/{address}/main-insights": {
+      "get": {
+        "summary": "Get the main insights of the market a vault lends into",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "chainId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[a-zA-Z0-9_:-]{1,64}$"
+            }
+          },
+          {
+            "name": "address",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "metric": {
+                      "type": "object",
+                      "properties": {
+                        "totalSupply": {
+                          "type": "string"
+                        },
+                        "totalDebts": {
+                          "type": "string"
+                        },
+                        "totalSupplyUsd": {
+                          "type": "string"
+                        },
+                        "totalDebtsUsd": {
+                          "type": "string"
+                        },
+                        "lastMetricDate": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "market": {
+                      "type": "object",
+                      "properties": {
+                        "blockchain": {
+                          "type": "string"
+                        },
+                        "protocol": {
+                          "type": "string"
+                        },
+                        "marketId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "blockchain",
+                        "protocol"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "metric"
+                  ]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "500",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "number"
+                    },
+                    "hasError": {
+                      "type": "boolean",
+                      "enum": [
+                        true
+                      ]
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "message": {
+                            "type": "string"
+                          },
+                          "path": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "message"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "message",
+                    "status",
+                    "hasError",
+                    "errors"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/vaults/{chainId}/{address}/risk-indicators": {
+      "get": {
+        "summary": "Get vault risk indicators",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "chainId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[a-zA-Z0-9_:-]{1,64}$"
+            }
+          },
+          {
+            "name": "address",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "vaultId": {
+                      "type": "number"
+                    },
+                    "chainId": {
+                      "type": "string"
+                    },
+                    "address": {
+                      "type": "string"
+                    },
+                    "indicators": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "key": {
+                            "type": "string"
+                          },
+                          "label": {
+                            "type": "string"
+                          },
+                          "status": {
+                            "type": "string",
+                            "enum": [
+                              "ok",
+                              "error"
+                            ]
+                          },
+                          "fetchedAt": {
+                            "type": "string"
+                          },
+                          "data": {
+                            "nullable": true
+                          }
+                        },
+                        "required": [
+                          "key",
+                          "label",
+                          "status",
+                          "fetchedAt"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "vaultId",
+                    "chainId",
+                    "address",
+                    "indicators"
+                  ]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "500",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "number"
+                    },
+                    "hasError": {
+                      "type": "boolean",
+                      "enum": [
+                        true
+                      ]
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "message": {
+                            "type": "string"
+                          },
+                          "path": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "message"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "message",
+                    "status",
+                    "hasError",
+                    "errors"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/vaults/{chainId}/{address}/analytics": {
+      "get": {
+        "summary": "Get the vault's analytics",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "chainId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[a-zA-Z0-9_:-]{1,64}$"
+            }
+          },
+          {
+            "name": "address",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "tvl": {
+                      "type": "array",
+                      "items": {}
+                    },
+                    "tvlUsd": {
+                      "type": "array",
+                      "items": {}
+                    },
+                    "apy": {
+                      "type": "array",
+                      "items": {}
+                    },
+                    "apy7d": {
+                      "type": "array",
+                      "items": {}
+                    },
+                    "apy30d": {
+                      "type": "array",
+                      "items": {}
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "500",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "number"
+                    },
+                    "hasError": {
+                      "type": "boolean",
+                      "enum": [
+                        true
+                      ]
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "message": {
+                            "type": "string"
+                          },
+                          "path": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "message"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "message",
+                    "status",
+                    "hasError",
+                    "errors"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/vaults/{chainId}/{address}/users/{wallet}/activity": {
+      "get": {
+        "summary": "Get user activity",
+        "tags": [
+          "users"
+        ],
+        "parameters": [
+          {
+            "name": "chainId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[a-zA-Z0-9_:-]{1,64}$"
+            }
+          },
+          {
+            "name": "address",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "wallet",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "chainId": {
+                        "type": "string"
+                      },
+                      "userAddress": {
+                        "type": "string"
+                      },
+                      "vaultAddress": {
+                        "type": "string"
+                      },
+                      "assetAddress": {
+                        "type": "string"
+                      },
+                      "type": {
+                        "type": "string",
+                        "enum": [
+                          "DEPOSIT",
+                          "WITHDRAW",
+                          "WITHDRAW_REQUEST",
+                          "WITHDRAW_CLAIM"
+                        ]
+                      },
+                      "amountRaw": {
+                        "type": "string"
+                      },
+                      "sharesRaw": {
+                        "type": "string"
+                      },
+                      "txHash": {
+                        "type": "string"
+                      },
+                      "blockNumber": {
+                        "type": "number"
+                      },
+                      "timestamp": {
+                        "type": "string"
+                      },
+                      "status": {
+                        "type": "string",
+                        "enum": [
+                          "COMPLETED"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "chainId",
+                      "userAddress",
+                      "vaultAddress",
+                      "assetAddress",
+                      "type",
+                      "amountRaw",
+                      "sharesRaw",
+                      "txHash",
+                      "blockNumber",
+                      "timestamp",
+                      "status"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "500",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "number"
+                    },
+                    "hasError": {
+                      "type": "boolean",
+                      "enum": [
+                        true
+                      ]
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "message": {
+                            "type": "string"
+                          },
+                          "path": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "message"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "message",
+                    "status",
+                    "hasError",
+                    "errors"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/vaults/{chainId}/{address}/users/{wallet}/balance": {
+      "get": {
+        "summary": "Get user balance for a specific vault",
+        "tags": [
+          "users"
+        ],
+        "parameters": [
+          {
+            "name": "chainId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[a-zA-Z0-9_:-]{1,64}$"
+            }
+          },
+          {
+            "name": "address",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "wallet",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "vaultId": {
+                      "type": "number",
+                      "nullable": true
+                    },
+                    "liveSharesRaw": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "liveSharesFormatted": {
+                      "type": "number",
+                      "nullable": true
+                    },
+                    "livePriceUsd": {
+                      "type": "number",
+                      "nullable": true
+                    },
+                    "liveBalanceUsd": {
+                      "type": "number",
+                      "nullable": true
+                    },
+                    "liveBalanceInKind": {
+                      "type": "number",
+                      "nullable": true
+                    },
+                    "apy": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "apy30d": {
+                      "type": "string",
+                      "nullable": true
+                    }
+                  },
+                  "required": [
+                    "vaultId",
+                    "liveSharesRaw",
+                    "liveSharesFormatted",
+                    "livePriceUsd",
+                    "liveBalanceUsd",
+                    "liveBalanceInKind",
+                    "apy",
+                    "apy30d"
+                  ]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "500",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "number"
+                    },
+                    "hasError": {
+                      "type": "boolean",
+                      "enum": [
+                        true
+                      ]
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "message": {
+                            "type": "string"
+                          },
+                          "path": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "message"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "message",
+                    "status",
+                    "hasError",
+                    "errors"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{wallet}/positions": {
+      "get": {
+        "description": "Returns active vaults, total balance USD, and weighted avg APY across all chains.",
+        "summary": "Get user portfolio positions",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "wallet",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "schemaVersion": {
+                        "type": "number",
+                        "enum": [
+                          1
+                        ]
+                      },
+                      "chainId": {
+                        "type": "string"
+                      },
+                      "inputTokens": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "chainId": {
+                              "type": "string"
+                            },
+                            "address": {
+                              "type": "string"
+                            },
+                            "decimals": {
+                              "type": "number"
+                            },
+                            "name": {
+                              "type": "string"
+                            },
+                            "imageUrl": {
+                              "type": "string"
+                            },
+                            "symbol": {
+                              "type": "string"
+                            },
+                            "coingeckoId": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "chainId",
+                            "address",
+                            "decimals",
+                            "name",
+                            "symbol"
+                          ]
+                        }
+                      },
+                      "landingUrl": {
+                        "type": "string"
+                      },
+                      "status": {
+                        "type": "string"
+                      },
+                      "category": {
+                        "type": "string"
+                      },
+                      "depositToken": {
+                        "type": "object",
+                        "properties": {
+                          "chainId": {
+                            "type": "string"
+                          },
+                          "address": {
+                            "type": "string"
+                          },
+                          "decimals": {
+                            "type": "number"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "imageUrl": {
+                            "type": "string"
+                          },
+                          "symbol": {
+                            "type": "string"
+                          },
+                          "coingeckoId": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "chainId",
+                          "address",
+                          "decimals",
+                          "name",
+                          "symbol"
+                        ]
+                      },
+                      "description": {
+                        "type": "string"
+                      },
+                      "featured": {
+                        "type": "boolean"
+                      },
+                      "managementFees": {
+                        "type": "number"
+                      },
+                      "performanceFees": {
+                        "type": "number"
+                      },
+                      "id": {
+                        "type": "number"
+                      },
+                      "receiptToken": {
+                        "type": "object",
+                        "properties": {
+                          "chainId": {
+                            "type": "string"
+                          },
+                          "address": {
+                            "type": "string"
+                          },
+                          "decimals": {
+                            "type": "number"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "imageUrl": {
+                            "type": "string"
+                          },
+                          "symbol": {
+                            "type": "string"
+                          },
+                          "coingeckoId": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "chainId",
+                          "address",
+                          "decimals",
+                          "name",
+                          "symbol"
+                        ]
+                      },
+                      "strategy": {
+                        "type": "string"
+                      },
+                      "riskReports": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string"
+                            },
+                            "url": {
+                              "type": "string"
+                            },
+                            "label": {
+                              "type": "string"
+                            },
+                            "image": {
+                              "type": "string"
+                            },
+                            "imageDark": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "id",
+                            "url"
+                          ]
+                        }
+                      },
+                      "positions": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "positionId": {
+                              "type": "string"
+                            },
+                            "strategyId": {
+                              "type": "string"
+                            },
+                            "blockchainId": {
+                              "type": "string"
+                            },
+                            "addresses": {
+                              "type": "array",
+                              "items": {
+                                "type": "string"
+                              }
+                            },
+                            "name": {
+                              "type": "string"
+                            },
+                            "tokensSymbols": {
+                              "type": "array",
+                              "items": {
+                                "type": "string"
+                              }
+                            },
+                            "mainTokenSymbol": {
+                              "type": "string"
+                            },
+                            "status": {
+                              "type": "string"
+                            },
+                            "protocol": {
+                              "type": "string"
+                            },
+                            "positionSize": {
+                              "type": "object",
+                              "additionalProperties": {
+                                "type": "number",
+                                "nullable": true
+                              }
+                            },
+                            "positionSizeUsd": {
+                              "type": "object",
+                              "additionalProperties": {
+                                "type": "number",
+                                "nullable": true
+                              },
+                              "nullable": true
+                            },
+                            "returns": {
+                              "type": "object",
+                              "additionalProperties": {
+                                "type": "number",
+                                "nullable": true
+                              },
+                              "nullable": true
+                            },
+                            "returnsUsd": {
+                              "type": "object",
+                              "additionalProperties": {
+                                "type": "number",
+                                "nullable": true
+                              },
+                              "nullable": true
+                            },
+                            "apyDay": {
+                              "type": "number",
+                              "nullable": true
+                            },
+                            "apyWeek": {
+                              "type": "number",
+                              "nullable": true
+                            },
+                            "apyMonth": {
+                              "type": "number",
+                              "nullable": true
+                            },
+                            "apy7d": {
+                              "type": "number",
+                              "nullable": true
+                            },
+                            "apy30d": {
+                              "type": "number",
+                              "nullable": true
+                            },
+                            "pendingRewardsUsd": {
+                              "type": "number",
+                              "nullable": true
+                            },
+                            "lastHarvestDate": {
+                              "type": "string",
+                              "nullable": true
+                            },
+                            "lastActivityDate": {
+                              "type": "string",
+                              "nullable": true
+                            },
+                            "mainPositionId": {
+                              "type": "string"
+                            },
+                            "yieldPositionId": {
+                              "type": "string"
+                            },
+                            "isIdleBalance": {
+                              "type": "boolean"
+                            },
+                            "isExternal": {
+                              "type": "boolean"
+                            },
+                            "externalType": {
+                              "type": "string",
+                              "nullable": true
+                            },
+                            "imageUrl": {
+                              "type": "string",
+                              "nullable": true
+                            }
+                          },
+                          "required": [
+                            "positionId",
+                            "strategyId",
+                            "blockchainId",
+                            "addresses",
+                            "name",
+                            "tokensSymbols",
+                            "mainTokenSymbol",
+                            "status",
+                            "positionSize",
+                            "positionSizeUsd",
+                            "returns",
+                            "returnsUsd",
+                            "apyDay",
+                            "apyWeek",
+                            "apyMonth",
+                            "apy7d",
+                            "apy30d",
+                            "pendingRewardsUsd",
+                            "lastHarvestDate",
+                            "lastActivityDate",
+                            "isIdleBalance",
+                            "isExternal",
+                            "externalType",
+                            "imageUrl"
+                          ]
+                        }
+                      },
+                      "contracts": {
+                        "type": "object",
+                        "properties": {
+                          "vault": {
+                            "type": "string"
+                          },
+                          "receiptToken": {
+                            "type": "string"
+                          },
+                          "teller": {
+                            "type": "string"
+                          },
+                          "accountant": {
+                            "type": "string"
+                          },
+                          "queue": {
+                            "type": "string"
+                          },
+                          "rolesAuthority": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "vault"
+                        ]
+                      },
+                      "contractsVerifiedAt": {
+                        "type": "string"
+                      },
+                      "family": {
+                        "type": "string"
+                      },
+                      "familyVersion": {
+                        "type": "number"
+                      },
+                      "vendor": {
+                        "type": "string"
+                      },
+                      "curator": {
+                        "type": "string"
+                      },
+                      "distributor": {
+                        "type": "string"
+                      },
+                      "releaseDate": {
+                        "type": "string"
+                      },
+                      "type": {
+                        "type": "string"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "marketIds": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "hasRiskRadar": {
+                        "type": "boolean"
+                      },
+                      "isFirelightProtected": {
+                        "type": "boolean"
+                      },
+                      "marketDataUpdatedAt": {
+                        "type": "string"
+                      },
+                      "activityIndexedAt": {
+                        "type": "string"
+                      },
+                      "analytics": {
+                        "type": "object",
+                        "properties": {
+                          "tvlSource": {
+                            "type": "string"
+                          },
+                          "tokenPrice": {
+                            "type": "string"
+                          },
+                          "tvl": {
+                            "type": "string"
+                          },
+                          "tvlUsd": {
+                            "type": "string"
+                          },
+                          "periodSeconds": {
+                            "type": "number"
+                          },
+                          "historicTimestamp": {
+                            "type": "string"
+                          },
+                          "currentTimestamp": {
+                            "type": "string"
+                          },
+                          "apy7d": {
+                            "type": "string"
+                          },
+                          "apy30d": {
+                            "type": "string"
+                          },
+                          "totalSupplySource": {
+                            "type": "string"
+                          },
+                          "totalSupply": {
+                            "type": "string"
+                          },
+                          "sharePriceSource": {
+                            "type": "string"
+                          },
+                          "sharePrice": {
+                            "type": "string"
+                          },
+                          "campaigns": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "vaultId": {
+                                  "oneOf": [
+                                    {
+                                      "type": "string"
+                                    },
+                                    {
+                                      "type": "number"
+                                    }
+                                  ]
+                                },
+                                "totalApr": {
+                                  "type": "number"
+                                },
+                                "source": {
+                                  "type": "string"
+                                },
+                                "campaignIds": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "string"
+                                  }
+                                },
+                                "breakdown": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object",
+                                    "properties": {
+                                      "tokenSymbol": {
+                                        "type": "string"
+                                      },
+                                      "tokenAddress": {
+                                        "type": "string"
+                                      },
+                                      "apr": {
+                                        "type": "number"
+                                      }
+                                    },
+                                    "required": [
+                                      "tokenSymbol",
+                                      "tokenAddress",
+                                      "apr"
+                                    ]
+                                  }
+                                },
+                                "status": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "vaultId",
+                                "totalApr",
+                                "source",
+                                "campaignIds",
+                                "breakdown",
+                                "status"
+                              ]
+                            }
+                          },
+                          "isHistoric": {
+                            "type": "boolean"
+                          }
+                        },
+                        "nullable": true
+                      },
+                      "protocolDescription": {
+                        "type": "string"
+                      },
+                      "withPositions": {
+                        "type": "boolean"
+                      },
+                      "userMetrics": {
+                        "type": "object",
+                        "properties": {
+                          "dbSharesRaw": {
+                            "type": "string"
+                          },
+                          "dbSharesFormatted": {
+                            "type": "number"
+                          },
+                          "dbBalanceInKind": {
+                            "type": "number"
+                          },
+                          "dbBalanceUsd": {
+                            "type": "number"
+                          },
+                          "historicalDepositedUsd": {
+                            "type": "number"
+                          }
+                        },
+                        "required": [
+                          "dbSharesRaw",
+                          "dbSharesFormatted",
+                          "dbBalanceInKind",
+                          "dbBalanceUsd",
+                          "historicalDepositedUsd"
+                        ],
+                        "nullable": true
+                      }
+                    },
+                    "required": [
+                      "schemaVersion",
+                      "isFirelightProtected",
+                      "analytics",
+                      "withPositions",
+                      "userMetrics"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "500",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "number"
+                    },
+                    "hasError": {
+                      "type": "boolean",
+                      "enum": [
+                        true
+                      ]
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "message": {
+                            "type": "string"
+                          },
+                          "path": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "message"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "message",
+                    "status",
+                    "hasError",
+                    "errors"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/pulse/notifications": {
+      "get": {
+        "summary": "Get pulse notifications",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "last_evaluated_key",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "number",
+              "maximum": 100,
+              "minimum": 0,
+              "exclusiveMinimum": 0
+            }
+          },
+          {
+            "name": "vaultChainIds",
+            "in": "query",
+            "description": "List of Vault chain IDs. Required if vaultAddresses is provided.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^[a-zA-Z0-9_:-]{1,64}$"
+              },
+              "nullable": true
+            }
+          },
+          {
+            "name": "vaultAddresses",
+            "in": "query",
+            "description": "List of Vault addresses. Required if vaultChainIds is provided.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "nullable": true
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "metric_key": {
+                        "type": "string"
+                      },
+                      "policy_id": {
+                        "type": "string"
+                      },
+                      "metric_date": {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      "market_id": {
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "notification": {
+                        "type": "string"
+                      },
+                      "blockchain": {
+                        "type": "string"
+                      },
+                      "protocol": {
+                        "type": "string"
+                      },
+                      "type": {
+                        "type": "string"
+                      },
+                      "created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      "market_name": {
+                        "type": "string",
+                        "nullable": true
+                      }
+                    },
+                    "required": [
+                      "metric_key",
+                      "policy_id",
+                      "metric_date",
+                      "market_id",
+                      "notification",
+                      "blockchain",
+                      "protocol",
+                      "type",
+                      "created_at",
+                      "market_name"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "500",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "number"
+                    },
+                    "hasError": {
+                      "type": "boolean",
+                      "enum": [
+                        true
+                      ]
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "message": {
+                            "type": "string"
+                          },
+                          "path": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "message"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "message",
+                    "status",
+                    "hasError",
+                    "errors"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/pulse/metadata": {
+      "get": {
+        "summary": "Get pulse notifications",
+        "tags": [],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "200",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "protocols": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "protocol_id": {
+                            "type": "string"
+                          },
+                          "name": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    },
+                    "blockchains": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "blockchain_id": {
+                            "type": "string"
+                          },
+                          "name": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    },
+                    "notification_types": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "protocol_types": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string"
+                          },
+                          "name": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    },
+                    "policies": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "object",
+                        "properties": {
+                          "policy_id": {
+                            "type": "string"
+                          },
+                          "info": {
+                            "type": "string"
+                          },
+                          "chart_id": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "500",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "number"
+                    },
+                    "hasError": {
+                      "type": "boolean",
+                      "enum": [
+                        true
+                      ]
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "message": {
+                            "type": "string"
+                          },
+                          "path": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "message"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "message",
+                    "status",
+                    "hasError",
+                    "errors"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/protocols/{protocol}/tvl": {
+      "get": {
+        "summary": "Get protocol TVL",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "protocol",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The name of the protocol to retrieve TVL for. For example: 'sentora'"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "value": {
+                      "type": "number"
+                    },
+                    "updatedAt": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "value"
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "404",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "number"
+                    },
+                    "hasError": {
+                      "type": "boolean",
+                      "enum": [
+                        true
+                      ]
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "message": {
+                            "type": "string"
+                          },
+                          "path": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "message"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "message",
+                    "status",
+                    "hasError",
+                    "errors"
+                  ]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "500",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "number"
+                    },
+                    "hasError": {
+                      "type": "boolean",
+                      "enum": [
+                        true
+                      ]
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "message": {
+                            "type": "string"
+                          },
+                          "path": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "message"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "message",
+                    "status",
+                    "hasError",
+                    "errors"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "info": {
+    "title": "Smart Yields",
+    "version": "1.0.0",
+    "description": "Smart Yields",
+    "contact": {
+      "name": "Smart Yields"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://services.vaults.sentora.com"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "ApiKeyAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "x-api-key"
+      }
+    }
+  },
+  "security": [
+    {
+      "ApiKeyAuth": []
+    }
+  ]
+}

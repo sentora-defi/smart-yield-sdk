@@ -1,0 +1,51 @@
+{
+  "name": "@sentora/vaults-mcp",
+  "version": "1.0.0",
+  "description": "MCP stdio server exposing the smart-yield command surface as read-only tools: vault discovery, yield analytics, positions, unsigned tx plans",
+  "license": "MIT",
+  "author": "Sentora",
+  "homepage": "https://vaults.sentora.com/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sentora-defi/smart-yield-sdk.git",
+    "directory": "packages/vaults-mcp"
+  },
+  "bugs": {
+    "url": "https://github.com/sentora-defi/smart-yield-sdk/issues"
+  },
+  "keywords": [
+    "defi",
+    "vaults",
+    "mcp",
+    "agents"
+  ],
+  "engines": {
+    "node": ">=20.3.0"
+  },
+  "type": "module",
+  "bin": {
+    "smart-yield-mcp": "dist/mcp.mjs"
+  },
+  "files": [
+    "dist",
+    "!dist/**/*.map",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "node build.mjs",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@modelcontextprotocol/sdk": "^1.32.1",
+    "@sentora/vaults-boring": "*",
+    "@sentora/vaults-morpho": "*",
+    "@sentora/vaults-plan": "*",
+    "@sentora/vaults-upshift-financial": "*",
+    "@sentora/yields-client": "*",
+    "@types/node": "^22",
+    "esbuild": "^0.25.0",
+    "typescript": "^5.6.0",
+    "viem": "2.55.15",
+    "zod": "^4.6.7"
+  }
+}

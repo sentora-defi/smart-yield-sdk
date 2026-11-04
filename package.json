@@ -1,0 +1,26 @@
+{
+  "name": "sentora-smart-yield",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "npm run build --workspaces --if-present",
+    "typecheck": "npm run typecheck -w @sentora/vaults-cli -w @sentora/vaults-mcp && tsc -p test/types",
+    "openapi:types": "openapi-typescript packages/yields-client/openapi.json -o packages/yields-client/src/openapi.ts",
+    "cli": "node packages/vaults-cli/dist/cli.mjs",
+    "verify": "node scripts/verify.mjs",
+    "release": "node scripts/publish.mjs",
+    "test:unit": "node --conditions=sentora-source --import tsx --test \"test/unit/*.test.mjs\"",
+    "test:fork": "node --conditions=sentora-source --import tsx --test --test-concurrency=1 \"test/fork/*.test.mjs\"",
+    "test:cov": "c8 --reporter=text --reporter=html --include \"packages/*/src/**\" --exclude-after-remap node --conditions=sentora-source --import tsx --test --test-concurrency=1 \"test/unit/*.test.mjs\" \"test/fork/*.test.mjs\"",
+    "fund-wallet": "node scripts/fund-wallet.mjs"
+  },
+  "devDependencies": {
+    "c8": "^10.1.3",
+    "openapi-typescript": "^7.13.0",
+    "tsx": "^4.21.0",
+    "viem": "2.55.15"
+  }
+}

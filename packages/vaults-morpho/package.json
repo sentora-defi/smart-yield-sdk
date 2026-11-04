@@ -1,0 +1,57 @@
+{
+  "name": "@sentora/vaults-morpho",
+  "version": "1.0.0",
+  "description": "Sentora primitives for Morpho Vaults (V1 MetaMorpho and V2): ERC-4626 deposits/withdrawals with gate preflight",
+  "license": "MIT",
+  "author": "Sentora",
+  "homepage": "https://vaults.sentora.com/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sentora-defi/smart-yield-sdk.git",
+    "directory": "packages/vaults-morpho"
+  },
+  "bugs": {
+    "url": "https://github.com/sentora-defi/smart-yield-sdk/issues"
+  },
+  "keywords": [
+    "defi",
+    "vaults",
+    "morpho",
+    "erc4626",
+    "viem"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "type": "module",
+  "exports": {
+    ".": {
+      "sentora-source": "./src/index.ts",
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "sideEffects": false,
+  "peerDependencies": {
+    "@sentora/vaults-plan": "^1.0.0",
+    "viem": "^2.47.5"
+  },
+  "devDependencies": {
+    "@sentora/vaults-plan": "*",
+    "viem": "2.55.15"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "node build.mjs && tsc -p tsconfig.build.json",
+    "prepublishOnly": "npm run build"
+  }
+}
